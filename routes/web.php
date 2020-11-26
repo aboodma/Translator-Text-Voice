@@ -16,4 +16,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/translate/{text}',"TranslateController@index")->name('translate');
+Route::get('/translate/{text}/{lang}',"TranslateController@index")->name('translate');

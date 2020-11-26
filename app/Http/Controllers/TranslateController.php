@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 class TranslateController extends Controller
 {
-    public function index($text)
+    public function index($text,$lang)
     {
 
 $curl = curl_init();
 
 curl_setopt_array($curl, array(
-  CURLOPT_URL => 'https://translate.yandex.net/api/v1/tr.json/translate?id=c5ea1fca.5fbe3ee9.4a79319c.74722d74657874-1-0&srv=tr-text&lang=ar-en&reason=auto&format=text',
+  CURLOPT_URL => 'https://translate.yandex.net/api/v1/tr.json/translate?id=c5ea1fca.5fbe3ee9.4a79319c.74722d74657874-1-0&srv=tr-text&lang='.$lang.'&reason=auto&format=text',
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => '',
   CURLOPT_MAXREDIRS => 10,

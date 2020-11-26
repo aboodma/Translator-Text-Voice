@@ -1,14 +1,17 @@
 const btn = document.querySelector('.talk');
 const content = document.querySelector('.english');
+const lang = document.getElementById('languages');
 
 
 const SpeechRecognition =  window.SpeechRecognition || window.webkitSpeechRecognition;
 
 const recognition = new SpeechRecognition();
-recognition.lang = "ar-ae";
+
 
 recognition.onstart = function() {
-   console.log('Voice Is Activated, You Can Speak');
+   // console.log('Voice Is Activated, You Can Speak');
+
+
 };
 
 recognition.onresult = function(event) {
@@ -19,6 +22,7 @@ recognition.onresult = function(event) {
 };
 
 btn.addEventListener('click', () => {
+    recognition.lang =document.getElementById("from").value;
    recognition.start();
 });
 
