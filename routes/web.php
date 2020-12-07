@@ -16,4 +16,17 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/translate/{text}/{lang}',"TranslateController@index")->name('translate');
+
+Route::get('/test', function () {
+    return view('welcome-moz');
+});
+
+Route::post('/translate/{lang}',"TranslateController@index")->name('translate');
+
+Route::get('categories','TranslateController@categories')->name('pharse.categories');
+
+Route::get('categories/topics','TranslateController@topic')->name('single.topic');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

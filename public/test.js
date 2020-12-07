@@ -3,6 +3,7 @@ const content = document.querySelector('.english');
 const lang = document.getElementById('languages');
 
 
+
 const SpeechRecognition =  window.SpeechRecognition || window.webkitSpeechRecognition;
 
 const recognition = new SpeechRecognition();
