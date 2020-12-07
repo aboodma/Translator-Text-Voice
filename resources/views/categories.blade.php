@@ -113,6 +113,9 @@
             padding: 0px;
 margin: 0px;
         }
+        .category_icon{
+            width: 35px;
+        }
     </style>
 </head>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
@@ -162,16 +165,24 @@ margin: 0px;
         <p class="m-2">All Topics</p>
     </div>
     <div class="row">
-        @for($i=0; $i<20 ; $i++)
+            @foreach(\App\Category::all() as $category)
         <div class="col-6 mb-2" >
             <div class="shadow p-2 bg-white rounded ">
-                <a href="{{route('single.topic')}}">
-                <p class="sp"><i class="fa fa-star" style="background-color: #BE1622;color: white; font-size: 1.2rem; border-radius: 25px; padding: 0.5rem;"></i>
-                Basics</p>
+               <div class="row">
+                   <div class="col-3">
+                        <a href="{{route('single.category',$category->id)}}">
+                <p class="sp"><img src="{{asset($category->icon)}}"  class="category_icon" alt="">
+                   </p>
                     </a>
+                   </div>
+                   <div class="col-9">
+                      <p style="line-break: anywhere;
+font-size: 0.8rem;margin: 0;  "><a style="color:black;" href="{{route('single.category',$category->id)}}">{{$category->name}}</a></p>
+                   </div>
+               </div>
             </div>
         </div>
-        @endfor
+        @endforeach
 
     </div>
 </div>
