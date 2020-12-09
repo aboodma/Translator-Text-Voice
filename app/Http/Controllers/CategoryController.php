@@ -73,7 +73,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        return view('admin.category_edit',compact('category'));
     }
 
     /**
@@ -85,7 +85,19 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+       $category->name = $request->name;
+        if ($category->save()){
+
+            if ($request->hasFile('icon')){
+                $MimeType = explode("/", $request->file('icon')->getMimeType());
+                $filename = "C-" . $category->id . "-" . time() . '.' . $MimeType[1];
+                $path = public_path('/uploads/icons/'.$filename);
+                $uploaded_icon = Image::make($request->file('icon'))->save($path);
+                $category->icon = '/uploads/icons/'.$filename;
+                $category->save();
+            }
+            return redirect()->route('categories.index');
+        }
     }
 
     /**
@@ -94,8 +106,10 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function delete(Category $category)
     {
-        //
+        if ($category->delete()){
+            return redirect()->route('categories.index');
+        }
     }
 }

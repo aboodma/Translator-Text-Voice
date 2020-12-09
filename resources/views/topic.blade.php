@@ -142,13 +142,12 @@ margin: 0px;
     </div>
     <div class="navbar navbar-dark bg-black box-shadow" style="border-bottom: 1px solid #f0eeee">
         <div class="container d-flex justify-content-between">
-            <a href="#" class="navbar-brand d-flex align-items-center">
-
-                <p >
-                    <b style="color: white">Translate</b>
+            <a href="{{url('/')}}"  class="navbar-brand d-flex align-items-center brand-centered">
 
 
-                </p>
+                    <img src="{{asset('frontend/2tanslator.png')}}" alt="">
+
+
             </a>
             <button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target="#navbarHeader"
                     aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
@@ -158,15 +157,16 @@ margin: 0px;
     </div>
 </header>
 <div class="container bg-white">
-
+    @foreach($category->Topics as $topic)
     <div class="row p-2">
-        @for($i=0; $i<20 ; $i++)
-        <div class="col-12 mb-1 mt-1" >
-            <p class="border-bottom-1" style="border-bottom: 1px solid black; padding-bottom: 1rem">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-        </div>
-        @endfor
 
-    </div>
+        <div class="col-12 mb-1 mt-1"  style="border-bottom: 1px solid black;">
+            <p class="border-bottom-1" style="">{{$topic->text}}</p>
+        </div >
+            </div>
+
+        @endforeach
+
 </div>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>

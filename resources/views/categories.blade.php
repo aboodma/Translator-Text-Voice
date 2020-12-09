@@ -145,13 +145,12 @@ margin: 0px;
     </div>
     <div class="navbar navbar-dark bg-black box-shadow" style="border-bottom: 1px solid #f0eeee">
         <div class="container d-flex justify-content-between">
-            <a href="#" class="navbar-brand d-flex align-items-center">
-
-                <p >
-                    <b style="color: white">Translate</b>
+            <a href="{{url('/')}}" class="navbar-brand d-flex align-items-center brand-centered">
 
 
-                </p>
+                    <img src="{{asset('frontend/2tanslator.png')}}" alt="">
+
+
             </a>
             <button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target="#navbarHeader"
                     aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">

@@ -65,7 +65,8 @@ class TopicController extends Controller
      */
     public function edit(Topic $topic)
     {
-        //
+        $categories = Category::all();
+        return view('admin.topic_edit',compact('topic','categories'));
     }
 
     /**
@@ -77,7 +78,11 @@ class TopicController extends Controller
      */
     public function update(Request $request, Topic $topic)
     {
-        //
+         $topic->text = $request->text;
+         $topic->category_id = $request->category_id;
+       if ($topic->save()){
+           return redirect()->route('topics.index');
+       }
     }
 
     /**
@@ -86,8 +91,10 @@ class TopicController extends Controller
      * @param  \App\Topic  $topic
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Topic $topic)
+    public function delete(Topic $topic)
     {
-        //
+       if($topic->delete()){
+           return redirect()->route('topics.index');
+       }
     }
 }

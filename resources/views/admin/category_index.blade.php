@@ -11,6 +11,7 @@
                     <td>{{__('Id')}}</td>
                     <td>{{__('Name')}}</td>
                     <td>{{__('Icon')}}</td>
+                    <td>{{__('Actions')}}</td>
                 </tr>
                 </thead>
                 <tbody>
@@ -19,6 +20,11 @@
                     <td>{{$category->id}}</td>
                     <td>{{$category->name}}</td>
                     <td>{{$category->icon}}</td>
+                    <td>
+                        <a href="{{route('categories.edit',$category->id)}}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
+                        <a href="{{route('categories.delete',$category->id)}}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+
+                    </td>
                 </tr>
                 @endforeach
                 </tbody>
