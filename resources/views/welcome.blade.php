@@ -160,22 +160,26 @@
                     <select class="form-control border-0 custom-select" id="from" name="from">
                         <option value="ar-ae">Arabic</option>
                         <option value="tr-tr">Turkish</option>
-                        <option value="en-us">English</option>
+                        <option value="en-us" selected>English</option>
                     </select>
                 </div>
                 <div class="form-group col-md-6 mt-0">
                         <a href="{{route('pharse.categories')}}" class="pharse"><img src="{{asset('frontend/ph.png')}}" width="70%" alt=""> </a>
 
                     <textarea class="form-control english border-0 custom-a-area"  required name="english" id="english"
-                         placeholder="Enter Text ..."     rows="10"></textarea>
+                         placeholder="Enter Text ..."     rows="10">
+                        @isset($_GET['text'])
+                            {{$_GET['text']}}
+                        @endisset
+                    </textarea>
                 </div>
 
                 <div class="form-group col-md-4 mb-0">
 
                     <select class="form-control border-0 custom-select to-select" id="to" name="to">
-                        <option value="ar-ae">Arabic</option>
+                        <option value="ar-ae" selected>Arabic</option>
                         <option value="tr-tr">Turkish</option>
-                        <option value="en-us" selected>English</option>
+                        <option value="en-us" >English</option>
 
                     </select>
                 </div>
@@ -197,14 +201,14 @@
                 <div class="row">
 
                     <div class="col-4">
-                    <button type="submit" class=" form-control underlined">English</button>
+                    <button type="button" id="selected_from_lang" data-value="" class=" form-control underlined">English</button>
                 </div>
                      <div class="col-4 text-center">
                     <button type="button" class=" btn btn-danger  talk btn-ci"> <i
                             class="fa fa-microphone"></i></button>
                 </div>
                 <div class="col-4">
-                    <button type="button" class=" form-control border-0 ">Turkish </button>
+                    <button type="button" id="selected_to_lang" data-value="" class=" form-control border-0 ">Turkish </button>
                 </div>
 
                 </div>
@@ -239,6 +243,7 @@ $("#english").keyup(throttle(function(){
     // do the search if criteria is met
     trans();
 }));
+
     function trans() {
         var arabic = $("#arabic").val();
         var english = $("#english").val();
@@ -317,51 +322,56 @@ $("#english").keyup(throttle(function(){
         })
     })
     $(document).ready(function () {
-        var canvas = document.querySelector("canvas");
+    if($("#english").val() != null){
+        trans();
+    }
 
-// Optional frames per second argument.
-        var stream = canvas.captureStream(25);
-        var recordedChunks = [];
 
-        console.log(stream);
-        var options = {mimeType: "video/webm; codecs=vp9"};
-        mediaRecorder = new MediaRecorder(stream, options);
+      var selectedText = $("#from option:selected").html();
+        $("#selected_from_lang").text(selectedText);
+        $("#selected_from_lang").attr('data-value', $("#from").val());
 
-        mediaRecorder.ondataavailable = handleDataAvailable;
-        mediaRecorder.start();
+                var selectedTextto = $("#to option:selected").html();
+        $("#selected_to_lang").text(selectedTextto);
+          $("#selected_to_lang").attr('data-value', $("#to").val());
 
-        function handleDataAvailable(event) {
-            console.log("data-available");
-            if (event.data.size > 0) {
-                recordedChunks.push(event.data);
-                console.log(recordedChunks);
-                download();
-            } else {
-                // ...
-            }
-        }
-
-        function download() {
-            var blob = new Blob(recordedChunks, {
-                type: "video/webm"
-            });
-            var url = URL.createObjectURL(blob);
-            var a = document.createElement("a");
-            document.body.appendChild(a);
-            a.style = "display: none";
-            a.href = url;
-            a.download = "test.webm";
-            a.click();
-            window.URL.revokeObjectURL(url);
-        }
-
-// demo: to download after 9sec
-        setTimeout(event => {
-            console.log("stopping");
-            mediaRecorder.stop();
-        }, 9000);
 
     });
+
+    $("#from").change(function () {
+        var selectedText = $("#from option:selected").html();
+        $("#selected_from_lang").text(selectedText);
+
+                var selectedTextto = $("#to option:selected").html();
+        $("#selected_to_lang").text(selectedTextto);
+        trans()
+
+    })
+    $("#to").change(function () {
+        var selectedText = $("#from option:selected").html();
+        $("#selected_from_lang").text(selectedText);
+
+                var selectedTextto = $("#to option:selected").html();
+        $("#selected_to_lang").text(selectedTextto);
+
+    })
+    $("#selected_to_lang").click(function () {
+        var w_b_f = $("#to").val();
+        var w_b_t = $("#from").val();
+
+        $("#from").val(w_b_f).change();
+        $("#to").val(w_b_t).change();
+         var w_b_f_t = $("#arabic").val();
+        var w_b_t_t =  $("#english").val();
+          console.log(w_b_t_t);
+        console.log(w_b_f_t);
+        $("#english").val(w_b_f_t);
+        $("#arabic").val(w_b_t_t);
+         trans()
+
+    })
+
+
 
 </script>
 </body>

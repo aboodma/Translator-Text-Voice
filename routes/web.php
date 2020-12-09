@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('front');
 
 Route::get('/test', function () {
     return view('welcome-moz');

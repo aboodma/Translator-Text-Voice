@@ -161,7 +161,8 @@ margin: 0px;
     <div class="row p-2">
 
         <div class="col-12 mb-1 mt-1"  style="border-bottom: 1px solid black;">
-            <p class="border-bottom-1" style="">{{$topic->text}}</p>
+            <a href="{{route('front',['text'=>$topic->text])}}" style="color: black">
+            <p class="border-bottom-1" style="">{{$topic->text}}</p></a>
         </div >
             </div>
 
