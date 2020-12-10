@@ -134,6 +134,7 @@
             </div>
         </div>
     </div>
+
     <div class="navbar navbar-dark bg-black box-shadow" style="border-bottom: 1px solid #f0eeee">
         <div class="container d-flex justify-content-between">
             <a href="#" class="navbar-brand d-flex align-items-center brand-centered">
@@ -152,34 +153,35 @@
 </header>
 <div class="container-fluid p-1">
     <div class="row pr-1 pl-1 pt-1">
-
+@php
+                        $languages = \App\Language::all();
+                        @endphp
         <div class="col-md-12">
             <form action="" method="post" class="row" id="translate_form" role="form">
                 <div class="row">
                 <div class="form-group col-md-12 mb-0">
                     <select class="form-control border-0 custom-select" id="from" name="from">
-                        <option value="ar-ae">Arabic</option>
-                        <option value="tr-tr">Turkish</option>
-                        <option value="en-us" selected>English</option>
+                       @foreach( $languages as $language)
+                        <option @if ($language->code == "en-us") selected @endif value="{{$language->code}}">{{$language->name}}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="form-group col-md-6 mt-0">
                         <a href="{{route('pharse.categories')}}" class="pharse"><img src="{{asset('frontend/ph.png')}}" width="70%" alt=""> </a>
 
                     <textarea class="form-control english border-0 custom-a-area"  required name="english" id="english"
-                         placeholder="Enter Text ..."     rows="10">
-                        @isset($_GET['text'])
-                            {{$_GET['text']}}
-                        @endisset
-                    </textarea>
+                         placeholder="Enter Text ..."     rows="10">@isset($_GET['text']) {{$_GET['text']}}   @endisset </textarea>
                 </div>
 
                 <div class="form-group col-md-4 mb-0">
 
                     <select class="form-control border-0 custom-select to-select" id="to" name="to">
-                        <option value="ar-ae" selected>Arabic</option>
-                        <option value="tr-tr">Turkish</option>
-                        <option value="en-us" >English</option>
+
+
+                        @foreach( $languages as $language)
+                        <option @if ($language->code == "ar-ae") selected @endif value="{{$language->code}}">{{$language->name}}</option>
+                        @endforeach
+
 
                     </select>
                 </div>
@@ -266,26 +268,10 @@ $("#english").keyup(throttle(function(){
     }
 
     function langc(from, to) {
-        if (from === "ar-ae" && to === "tr-tr") {
-            return "ar-tr";
-        } else if (from === "ar-ae" && to === "en-us") {
-            return "ar-en";
-
-        } else if (from === "en-us" && to === "ar-ae") {
-            return "en-ar";
-
-        } else if (from === "en-us" && to === "tr-tr") {
-            return "en-tr";
-
-        } else if (from === "tr-tr" && to === "ar-ae") {
-            return "tr-ar";
-
-        } else if (from === "tr-tr" && to === "en-us") {
-            return "tr-en";
-
-        } else {
-            return "en-ar";
-        }
+        var ar_from = from.split("-");
+        var ar_to = to.split("-");
+        var lang = ar_from[0] + "-" + ar_to[0];
+        return lang;
     }
 </script>
 
@@ -317,7 +303,7 @@ $("#english").keyup(throttle(function(){
                 speak();
             },
             error: function (err) {
-                console.log(err)
+
             }
         })
     })

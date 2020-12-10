@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('front');
+Route::get('/', 'TranslateController@welcome')->name('front');
 
 Route::get('/test', function () {
     return view('welcome-moz');
@@ -46,5 +44,17 @@ Route::get('topics/edit/{topic}','TopicController@edit')->name('topics.edit');
 Route::get('topics/delete/{topic}','TopicController@delete')->name('topics.delete');
 Route::post('topics/store','TopicController@store')->name('topics.store');
 Route::post('topics/update/{topic}','TopicController@update')->name('topics.update');
+Route::get('visitors/current','VisitorController@current')->name('visitors.current');
+
+Route::get('visitors/all','VisitorController@all')->name('visitors.all');
+Route::get('visitors/day','VisitorController@day')->name('visitors.day');
+Route::get('visitors/month','VisitorController@month')->name('visitors.month');
+
+Route::get('visitors/all/count','VisitorController@all_count')->name('visitors.all.count');
+Route::get('visitors/day/count','VisitorController@day_count')->name('visitors.day.count');
+Route::get('visitors/month/count','VisitorController@month_count')->name('visitors.month.count');
+
+Route::get('language/create','LanguageController@create')->name('language.create');
+Route::post('language/store','LanguageController@store')->name('language.store');
 });
 
