@@ -161,7 +161,7 @@ margin: 0px;
     <div class="row p-2">
 
         <div class="col-12 mb-1 mt-1"  style="border-bottom: 1px solid black;">
-            <a href="{{route('front',['text'=>$topic->text])}}" style="color: black">
+            <a href="javascript:void(0)" onclick='goTo(this,"{{route('front',['text'=>$topic->text])}}")' class="topic" style="color: black">
             <p class="border-bottom-1" style="">{{$topic->text}}</p></a>
         </div >
             </div>
@@ -176,6 +176,13 @@ margin: 0px;
         integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
         crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    function goTo(el,href) {
 
+
+        window.location.href =href+"&from={{$from}}&to={{$to}}";
+
+       }
+</script>
 </body>
 </html>

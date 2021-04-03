@@ -54,14 +54,25 @@ class TranslateController extends Controller
     }
 
 
-    public function categories()
+    public function categories(Request $request)
     {
+        if (isset($request->from) && isset($request->to)){
+            $from = $request->from;
+            $to = $request->to;
+        return view('categories',compact('from','to'));
+        }
         return view('categories');
     }
 
-    public function topic()
+    public function topic(Request $request)
     {
-        return view('topic');
+        dd($request);
+//        if (isset($request->from) && isset($request->to)) {
+//            $from = $request->from;
+//            $to = $request->to;
+//            return view('topic',compact('from','to'));
+//        }
+//        return view('topic');
     }
 
     public function translate_bing($text, $from, $to)

@@ -169,14 +169,14 @@ margin: 0px;
             <div class="shadow p-2 bg-white rounded ">
                <div class="row">
                    <div class="col-3">
-                        <a href="{{route('single.category',$category->id)}}">
+                        <a href="javascript:void(0)" onclick="goTo(this,'{{route('single.category',$category->id)}}')" class="cate">
                 <p class="sp"><img src="{{asset($category->icon)}}"  class="category_icon" alt="">
                    </p>
                     </a>
                    </div>
                    <div class="col-9">
                       <p style="line-break: anywhere;
-font-size: 0.8rem;margin: 0;  "><a style="color:black;" href="{{route('single.category',$category->id)}}">{{$category->name}}</a></p>
+font-size: 0.8rem;margin: 0;  "><a style="color:black; " onclick="goTo(this,'{{route('single.category',$category->id)}}')" href="javascript:void(0)">{{$category->name}}</a></p>
                    </div>
                </div>
             </div>
@@ -192,6 +192,13 @@ font-size: 0.8rem;margin: 0;  "><a style="color:black;" href="{{route('single.ca
         integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
         crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    function goTo(el,href) {
 
+
+        window.location.href =href+"?from={{$from}}&to={{$to}}";
+
+       }
+</script>
 </body>
 </html>

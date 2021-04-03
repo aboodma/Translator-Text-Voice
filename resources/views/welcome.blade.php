@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
           integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
     <style>
-        .custom-select{
+        .custom-select {
             appearance: none;
             --select-border: #777;
             --select-focus: blue;
@@ -20,59 +20,71 @@
             align-items: center;
             border-radius: 0;
         }
+
         .custom-select::after {
-          content: "";
-          width: 0.8em;
-          height: 0.5em;
-          background-color: var(--select-arrow);
-          clip-path: polygon(100% 0%, 0 0%, 50% 100%);
-          grid-area: select;
-              justify-self: end;
+            content: "";
+            width: 0.8em;
+            height: 0.5em;
+            background-color: var(--select-arrow);
+            clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+            grid-area: select;
+            justify-self: end;
         }
-        .custom-a-area{
+
+        .custom-a-area {
             border-top-left-radius: 0;
             border-top-right-radius: 0;
 
         }
-        .disabled{
+
+        .disabled {
             background-color: white !important;
         }
-        .disabled::placeholder{
-            color:#BE1622;
-        }
-        .hidden{
-            display: none;
-        }
-        .to-select{
-                  color: #BE1622;
-        }
-        .to-select  option:first-child{
+
+        .disabled::placeholder {
             color: #BE1622;
         }
 
-.separator {
-    display: flex;
-    align-items: center;
-    text-align: center;
-    background-color: white;
-}
-.separator::before, .separator::after {
-    content: '';
-    flex: 1;
-    border-bottom: 1px solid #000;
-}
-.separator::before {
-    margin-right: .25em;
-}
-.separator::after {
-    margin-left: .25em;
-}
-        .border-radius-custom{
+        .hidden {
+            display: none;
+        }
+
+        .to-select {
+            color: #BE1622;
+        }
+
+        .to-select option:first-child {
+            color: #BE1622;
+        }
+
+        .separator {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            background-color: white;
+        }
+
+        .separator::before, .separator::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #000;
+        }
+
+        .separator::before {
+            margin-right: .25em;
+        }
+
+        .separator::after {
+            margin-left: .25em;
+        }
+
+        .border-radius-custom {
             border-radius: 25px;
             padding: .25rem 1.5rem;
         }
-        .btn-ci{
-           border-radius: 25px;
+
+        .btn-ci {
+            border-radius: 25px;
             width: 50px;
             height: 50px;
             background-color: #BE1622;
@@ -80,32 +92,37 @@
             font-size: 1.5rem;
             line-height: 0;
         }
-        .separator > .btn:hover{
+
+        .separator > .btn:hover {
             background-color: transparent;
             color: black;
         }
+
         .underlined {
             border: 0;
             border-bottom: 1px solid #be1622;
             border-radius: 0px;
         }
-        .bg-black{
-                background-color: #000000 !important;
+
+        .bg-black {
+            background-color: #000000 !important;
         }
+
         .pharse {
-	position: absolute;
-	bottom: 0;
-	right: 2rem;
-	background: transparent;
-	border: 0;
-	font-size: 1.5rem;
+            position: absolute;
+            bottom: 0;
+            right: 2rem;
+            background: transparent;
+            border: 0;
+            font-size: 1.5rem;
             color: black;
             margin-bottom: 1rem;
-}
+        }
+
         .brand-centered {
             margin-left: 30%;
 
-            }
+        }
 
     </style>
 </head>
@@ -140,7 +157,7 @@
             <a href="#" class="navbar-brand d-flex align-items-center brand-centered">
 
 
-                    <img src="{{asset('frontend/2tanslator.png')}}" alt="">
+                <img src="{{asset('frontend/2tanslator.png')}}" alt="">
 
 
             </a>
@@ -153,67 +170,87 @@
 </header>
 <div class="container-fluid p-1">
     <div class="row pr-1 pl-1 pt-1">
-@php
-                        $languages = \App\Language::all();
-                        @endphp
+        @php
+            $languages = \App\Language::all();
+        @endphp
         <div class="col-md-12">
             <form action="" method="post" class="row" id="translate_form" role="form">
                 <div class="row">
-                <div class="form-group col-md-12 mb-0">
-                    <select class="form-control border-0 custom-select" id="from" name="from">
-                       @foreach( $languages as $language)
-                        <option @if ($language->code == "en-us") selected @endif value="{{$language->code}}">{{$language->name}}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="form-group col-md-6 mt-0">
-                        <a href="{{route('pharse.categories')}}" class="pharse"><img src="{{asset('frontend/ph.png')}}" width="70%" alt=""> </a>
+                    <div class="form-group col-md-12 mb-0">
+                        <select class="form-control border-0 custom-select" id="from" name="from">
+                            @foreach( $languages as $language)
+                               @if(isset($_GET['from']) && $_GET['from'] == $language->code)
+                                    <option  selected
+                                        value="{{$language->code}}">{{$language->name}}</option>
 
-                    <textarea class="form-control english border-0 custom-a-area"  required name="english" id="english"
-                         placeholder="Enter Text ..."     rows="10">@isset($_GET['text']) {{$_GET['text']}}   @endisset </textarea>
-                </div>
+                            @elseif (!isset($_GET['from']) && $language->code == "en-us" )
+                                <option  selected
+                                        value="{{$language->code}}">{{$language->name}}</option>
+                                 @else
+                                <option
+                                        value="{{$language->code}}">{{$language->name}}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6 mt-0">
+                        <a href="javascript:void(0)" id="pharse" class="pharse"><img src="{{asset('frontend/ph.png')}}"
+                                                                                     width="70%" alt=""> </a>
 
-                <div class="form-group col-md-4 mb-0">
+                        <textarea class="form-control english border-0 custom-a-area" required name="english"
+                                  id="english"
+                                  placeholder="Enter Text ..."
+                                  rows="10">@isset($_GET['text']) {{$_GET['text']}}   @endisset </textarea>
+                    </div>
+                    <div class="form-group col-md-4 mb-0">
+                        <select class="form-control border-0 custom-select to-select" id="to" name="to">
+                            @foreach( $languages as $language)
+                                @if(isset($_GET['to']) && $_GET['to'] == $language->code)
+                                    <option  selected
+                                        value="{{$language->code}}">{{$language->name}}</option>
 
-                    <select class="form-control border-0 custom-select to-select" id="to" name="to">
-
-
-                        @foreach( $languages as $language)
-                        <option @if ($language->code == "ar-ae") selected @endif value="{{$language->code}}">{{$language->name}}</option>
-                        @endforeach
-
-
-                    </select>
-                </div>
-                <div class="form-group col-md-6 mb-0">
-
-                    <textarea class="form-control arabic border-0 custom-a-area disabled" placeholder="Translation Here ..." disabled name="arabic" id="arabic" rows="10"></textarea>
-                </div>
-                <div class="">
-                    <select class="form-control voices hidden"></select>
-                </div>
-                <div class="col-md-3">
-                      <div class="separator">
-                          <span class="btn btn-outline-dark btn-sm border-radius-custom">Speak Now</span>
-                      </div>
-
+                            @elseif (!isset($_GET['to']) && $language->code == "ar-ae" )
+                                <option  selected
+                                        value="{{$language->code}}">{{$language->name}}</option>
+                                 @else
+                                <option
+                                        value="{{$language->code}}">{{$language->name}}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6 mb-0">
+                        <textarea class="form-control arabic border-0 custom-a-area disabled"
+                                  placeholder="Translation Here ..." disabled name="arabic" id="arabic"
+                                  rows="10"></textarea>
+                    </div>
+                    <div class="">
+                        <select class="form-control voices hidden"></select>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="separator">
+                            <span class="btn btn-outline-dark btn-sm border-radius-custom">Speak Now</span>
+                        </div>
                     </div>
                 </div>
                 <div class="container pt-2 pb-5 bg-white">
-                <div class="row">
+                    <div class="row">
+                        <div class="col-4">
+                            <button type="button" id="selected_from_lang" data-value=""
+                                    class=" form-control underlined">English
+                            </button>
+                        </div>
+                        <div class="col-4 text-center">
+                            <button type="button" class=" btn btn-danger  talk btn-ci"><i
+                                    class="fa fa-microphone"></i></button>
+                        </div>
+                        <div class="col-4">
+                            <button type="button" id="selected_to_lang" data-value="" class=" form-control border-0 ">
+                                Turkish
+                            </button>
+                        </div>
 
-                    <div class="col-4">
-                    <button type="button" id="selected_from_lang" data-value="" class=" form-control underlined">English</button>
-                </div>
-                     <div class="col-4 text-center">
-                    <button type="button" class=" btn btn-danger  talk btn-ci"> <i
-                            class="fa fa-microphone"></i></button>
-                </div>
-                <div class="col-4">
-                    <button type="button" id="selected_to_lang" data-value="" class=" form-control border-0 ">Turkish </button>
-                </div>
-
-                </div>
+                    </div>
                 </div>
 
             </form>
@@ -230,21 +267,22 @@
         crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    function throttle(f, delay){
-    var timer = null;
-    return function(){
-        var context = this, args = arguments;
-        clearTimeout(timer);
-        timer = window.setTimeout(function(){
-            f.apply(context, args);
-        },
-        delay || 500);
-    };
-}
-$("#english").keyup(throttle(function(){
-    // do the search if criteria is met
-    trans();
-}));
+    function throttle(f, delay) {
+        var timer = null;
+        return function () {
+            var context = this, args = arguments;
+            clearTimeout(timer);
+            timer = window.setTimeout(function () {
+                    f.apply(context, args);
+                },
+                delay || 500);
+        };
+    }
+
+    $("#english").keyup(throttle(function () {
+        // do the search if criteria is met
+        trans();
+    }));
 
     function trans() {
         var arabic = $("#arabic").val();
@@ -308,18 +346,24 @@ $("#english").keyup(throttle(function(){
         })
     })
     $(document).ready(function () {
-    if($("#english").val() != null){
-        trans();
-    }
+        if ($("#english").val() != null) {
+            trans();
+        }
+        $("#pharse").on("click",function(e){
+            e.preventDefault();
+            var from = $("#from").val();
+            var to = $("#to").val();
+            window.location.href = "{{route('pharse.categories')}}"+"?from="+from+"&to="+to;
+        })
 
 
-      var selectedText = $("#from option:selected").html();
+        var selectedText = $("#from option:selected").html();
         $("#selected_from_lang").text(selectedText);
         $("#selected_from_lang").attr('data-value', $("#from").val());
 
-                var selectedTextto = $("#to option:selected").html();
+        var selectedTextto = $("#to option:selected").html();
         $("#selected_to_lang").text(selectedTextto);
-          $("#selected_to_lang").attr('data-value', $("#to").val());
+        $("#selected_to_lang").attr('data-value', $("#to").val());
 
 
     });
@@ -328,7 +372,7 @@ $("#english").keyup(throttle(function(){
         var selectedText = $("#from option:selected").html();
         $("#selected_from_lang").text(selectedText);
 
-                var selectedTextto = $("#to option:selected").html();
+        var selectedTextto = $("#to option:selected").html();
         $("#selected_to_lang").text(selectedTextto);
         trans()
 
@@ -337,7 +381,7 @@ $("#english").keyup(throttle(function(){
         var selectedText = $("#from option:selected").html();
         $("#selected_from_lang").text(selectedText);
 
-                var selectedTextto = $("#to option:selected").html();
+        var selectedTextto = $("#to option:selected").html();
         $("#selected_to_lang").text(selectedTextto);
 
     })
@@ -347,16 +391,15 @@ $("#english").keyup(throttle(function(){
 
         $("#from").val(w_b_f).change();
         $("#to").val(w_b_t).change();
-         var w_b_f_t = $("#arabic").val();
-        var w_b_t_t =  $("#english").val();
-          console.log(w_b_t_t);
+        var w_b_f_t = $("#arabic").val();
+        var w_b_t_t = $("#english").val();
+        console.log(w_b_t_t);
         console.log(w_b_f_t);
         $("#english").val(w_b_f_t);
         $("#arabic").val(w_b_t_t);
-         trans()
+        trans()
 
     })
-
 
 
 </script>

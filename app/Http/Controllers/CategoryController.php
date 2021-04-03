@@ -60,8 +60,14 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function topic(Category $category)
+    public function topic(Request $request,Category $category)
     {
+
+        if (isset($request->from) && isset($request->to)) {
+            $from = $request->from;
+            $to = $request->to;
+            return view('topic',compact('from','to','category'));
+        }
         return view('topic',compact('category'));
     }
 
